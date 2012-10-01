@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow" 
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-		xsi:schemaLocation="http://www.springframework.org/schema/webflow 
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow 
 							http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
-		start-state="firstPage">
+	start-state="newPerson">
+
+	<var name="personForm" class="com.tim.simpleWebflow.PersonForm" />
+
+	<view-state id="newPerson" view="editPerson" model="personForm">
+		<on-entry>
+			<evaluate expression="personAction.setupForm" result="flowScope.personForm" />
+		</on-entry>
+		<transition on="addPet">
+			<evaluate expression="personAction.addPet" />
+			<render fragments="pets" />
+		</transition>
+		<transition on="save" to="savePerson" />
+	</view-state>
 	
-	<view-state id="firstPage">
-    </view-state>
-	
+	<view-state id="savePerson" />
 </flow>
